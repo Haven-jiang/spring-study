@@ -1,21 +1,39 @@
 package com.haven.pojo;
 
+import java.util.Date;
+
 public class User {
-    private String name;
+
+    private String ptr;
 
     public User(){
         System.out.println("User的无参构造!");
     }
 
-    public String getName() {
-        return name;
+    public User(String name) {
+        this.ptr = name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public User(User user) {
+        System.out.println(user.getPtr());
+    }
+
+    public String getPtr() {
+        return ptr;
+    }
+
+    public void setPtr(String ptr) {
+        this.ptr = ptr;
     }
 
     public void show() {
-        System.out.println("name = " + name);
+        System.out.println("name = " + ptr);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "ptr='" + ptr + '\'' +
+                '}';
     }
 }
