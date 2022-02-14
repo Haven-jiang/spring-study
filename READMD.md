@@ -969,7 +969,7 @@ public class People {
 
 
 
-<img src="C:\Users\14763\AppData\Roaming\Typora\typora-user-images\image-20220214141936625.png" alt="image-20220214141936625" style="zoom: 150%;" />
+<img src="./image/7.0.png" alt="注解包" style="zoom: 150%;" />
 
 
 
