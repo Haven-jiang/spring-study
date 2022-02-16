@@ -29,7 +29,6 @@
     <artifactId>spring-jdbc</artifactId>
     <version>5.3.15</version>
 </dependency>
-
 ```
 
 ## 1.2 优点
@@ -140,7 +139,7 @@ Spring:
 **Code:[[spring-02-hellospring]]**
 <https://github.com/Haven-jiang/spring-study/tree/master/spring-02-hellospring>
 
-<img src="image/02-hello.jpg" style="zoom:67%;" />
+![](image/02-hello.jpg)
 
 ```Java
 package com.haven.pojo;
@@ -166,7 +165,7 @@ public class Hello {
 }
 ```
 
-<img src="image/02-beans.jpg" style="zoom:67%;" />
+![](image/02-beans.jpg)
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -198,7 +197,7 @@ public class Hello {
 </beans>
 ```
 
-<img src="image/02-MyText.jpg" style="zoom:67%;" />
+![](image/02-MyText.jpg)
 
 ```Java
 import com.haven.pojo.Hello;
@@ -220,7 +219,7 @@ public class MyTest {
 
 ## **3.2.About ApplicationContext:**
 
-<img src="./image/ApplicationContext.jpg"  />
+![](./image/ApplicationContext.jpg)
 
 ## 3.3.ref 和 value 的使用与区别
 
@@ -229,7 +228,7 @@ value: 具体的值， 基本数据类型
 
 [spring-01-ioc1]: https://github.com/Haven-jiang/spring-study/tree/master/spring-01-ioc1	"code"
 
-<img src="./image/01-beans.jpg" alt="-" style="zoom:67%;" />
+![](./image/01-beans.jpg)
 
 ```Xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -967,13 +966,25 @@ public class People {
 
 在Spring4之后, 要使用注解开发, 必须要保证aop的包导入了
 
-
-
-<img src="./image/7.0.png" alt="注解包" style="zoom: 150%;" />
-
-
+![](./image/7.0.png)
 
 使用注解需要导入context约束, 增加注解的支持!
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/context
+    https://www.springframework.org/schema/context/spring-context.xsd
+    https://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    <context:annotation-config/>
+</beans>
+```
+
+
 
 
 
@@ -983,20 +994,304 @@ public class People {
 
 2. 属性如何注入
 
+   ```xml
+   @Component //等价于 <bean id="user" class="com.Haven.pojo.User"/>
+   public class User {
+   
+       @Value("Haven") //相当于 <property name="name" value="Haven"/>
+       public String name;
+   
+       public void setName(String name) {
+           this.name = name;
+       }
+   }
+   ```
+
    
 
 3. 衍生的注解
 
-   
+   @Component 有几个衍生注解, 我们在web开发中, 会按照mvc三层架构分层!
+
+   - dao [@Repository]
+
+   - service [@Service]
+
+   - controller [@Controller]
+
+     这四个注解功能都是一样的, 都是代表将某个类注册到Spring中, 装配bean
 
 4. 自动装配置
 
-   
+   ```xml
+   - @Autowired: 自动装配通过 type->name
+       如果Autowired不能唯一自动装配上属性, 则需要通过@Qualifier(value="xxx")
+   - @Nullable : 字段标记了这个注解, 说明这个字段可以为null
+   - @Resource : 自动装配通过 name->type
+   ```
 
 5. 作用域
 
+   ```java
+   @Component //等价于 <bean id="user" class="com.Haven.pojo.User"/>
+   @Scope("prototype")
+   public class User {
    
+       public String name;
+   
+       @Value("Haven") //相当于 <property name="name" value="Haven"/>
+       public void setName(String name) {
+           this.name = name;
+       }
+   }
+   ```
 
 6. 小结
 
+   xml 与 注解:
+
+   - xml 更加万能, 适用于任何场合! 维护简单方便
+   - 注解 不是自己类使用不了, 维护相对复杂!
    
+   xml 与 注解最佳实践: 
+   
+   - xml 用来管理bean;
+   - 注解只负责完成属性注入;
+   - 我们在使用的过程中, 只需要注意一个问题: 必须让注解生效, 就需要开启注解的支持;
+   
+   ```xml
+       <!--指定要扫描的包, 这个包下的注解就会生效-->
+       <context:component-scan base-package="com.Haven"/>
+       <context:annotation-config/>
+   ```
+
+
+
+# 8、使用Java的方式配置Spring
+
+我们现在要完全不适用Spring的xml配置了, 全权交给java来做!
+
+JavaConfig 是Spring的一个子项目, 在Spring 4 之后, 他成为了一个核心功能.
+
+实体类:
+
+```java
+//这里这个注解的意思, 就是说明这个类被Spring接管了, 注册到了容器中
+@Component
+public class User {
+
+    @Value("Haven") // 属性注入值
+    public String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
+```
+
+配置文件:
+
+```java
+@Configuration //这个也会Spring容器托管, 注册到容器中,因为他本来就是一个@Component. @Configuration代表这是一个配置类就和我们之前看的beans.xml
+@ComponentScan("com.Haven.pojo")
+@Import(AppConfig1.class)
+public class AppConfig {
+
+    //注册一个bean, 这就相当与我们之前写的一个bean标签
+    //这个方法的名字, 就相当于bean标签中的id属性
+    //这个方法的返回值, 就相当于bean标签中的class属性
+    @Bean
+    public User user() {
+        return new User();//就是返回要注入到bean的对象!
+    }
+}
+```
+
+测试类:
+
+```java
+public class MyTest {
+    public static void main(String[] args) {
+        //如果完全使用了配置类方式去做, 我们就只能通过 AnnotationConfig 上下文来获取容器, 通过配置类的class对象加载!
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        User bean = context.getBean("user", User.class);
+        System.out.println(bean);
+    }
+}
+```
+
+这种纯Java的配置方式, 在 Spring Boot 中随处可见!
+
+# 9、代理模式
+
+为什么要学习代理模式?因为这就是SpringAOP的底层![SpringAOP 和 SpringMVC]
+代理模式的分类:
+- 静态代理
+- 动态代理
+
+## 9.1 静态代理
+角色分析:
+- 抽象角色:一般会使用接口或者抽象类来解决
+- 真实角色:被代理的角色
+- 代理角色:代理真实角色, 代理真实角色后, 我们一般会做一些附属操作
+- 客户:访问对象的人!
+
+代码步骤:
+1. 接口
+```java
+//租房
+public interface Rent {
+    public void rent();
+}
+```
+2. 真实角色
+```java
+//房东
+public class Host implements Rent {
+    @Override
+    public void rent() {
+        System.out.println("房东要出租房子");
+    }
+}
+```
+3. 代理角色
+```java
+public class Proxy implements Rent {
+    private Host host;
+
+    public Proxy() {
+    }
+
+    public Proxy(Host host) {
+        this.host = host;
+    }
+
+    @Override
+    public void rent() {
+        seeHouse();
+        host.rent();
+        heTong();
+        fare();
+    }
+
+    //看房
+    public void seeHouse() {
+        System.out.println("中介带你看房");
+    }
+
+    //合同
+    public void heTong() {
+        System.out.println("签租赁合同");
+    }
+
+    //收中介费
+    public void fare() {
+        System.out.println("收中介费");
+    }
+}
+```
+4. 客户端访问代理角色
+```java
+public class Client {
+    public static void main(String[] args) {
+        //房东要租房子
+        Host host = new Host();
+        //正常
+        //host.rent();
+        //代理,中介帮房东租房子,但是?代理角一般会有一般会有一些附属操作!
+        Proxy proxy = new Proxy(host);
+        //你不用面对房东,直接找中介租房即可!
+        proxy.rent();
+    }
+}
+```
+
+代理模式的好处:
+- 可以使真实角色的操作更加纯粹!不用去关注一些公共的业务
+- 公共也就交给代理角色!实现了业务的分工!
+- 公共业务发生扩展的时候, 方便集中管理!
+缺点:
+- 一个真实角色就会产生一个代理角色;代码量会翻倍 开发效率会变低
+
+## 10.2 加深理解
+
+代码: file:spring-08-proxy
+![](./image/AOP.png)
+
+## 10.3 动态代理
+- 动态代理和静态代理角色一样
+- 动态代理的代理类是动态生成的, 不是我们直接写好的!
+- 动态代理分为两大类: 基于接口的动态代理, 基于类的动态代理
+  - 基于接口 -- JDK动态代理
+  - 基于类 -- cglib
+  - java字节码实现 -- javassist
+
+需要了解两个类: Proxy: 代理, InvocationHandler: 调用处理程序
+
+
+
+动态代理的好处:
+
+- 可以使真实角色的操作更加纯粹! 不用去关注一些公共的业务
+- 公共也就交给代理角色 实现了业务的分工
+- 公共业务发生扩展的时候 方便集中管理
+- 一个动态代理类代理的是一个接口 一般就是对应的一类业务
+- 一个动态类可以代理多个类 只要是实现了同一个接口就行
+
+
+
+# 10、AOP
+
+## 10.1 什么是AOP
+
+AOP(Aspect Oriented Programming) 意为: 面向切片编程, 通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术. AOP是OOP的延续, 是软件开发中的一个热点, 也是Spring框架中的一个重要内容, 是函数式编程的一种衍生泛型. 利用AOP可以对业务逻辑的各个部分进行隔离,从而使得业务逻辑各部分之间的耦合度降低, 提高程序的可重用性, 同时提高了开发效率.
+
+<img src="./image/AOP.jpg" alt="AOP"  />
+
+## 10.2 AOP在Spring中的作用
+
+==提供声明式服务; 允许用户自定义切面==
+
+- 横切关注点: 跨越应用程序多个模块的方法或功能. 即是, 与我们业务逻辑无关的, 但是我们需要关注的部分, 就是横切关注点. 如日志, 安全, 缓存, 事务等等…
+- 切面(Aspect): 横切关注点 被模块化 的特殊对象. 即, 他是一个类.
+- 通知(Advice): 切面必须要完成的工作, 即 它是类中的一个方法.
+- 目标(Target): 被通知对象.
+- 代理(Proxy): 向目标对象应用通知之后创建的对象.
+- 切入点(PointCut): 切面通知 执行的“地点”的定义.
+- 连接点(JionPoint): 与切入点匹配的支持点.
+
+![](./image/10.jpg)
+
+SpringAOP中, 通过Advice定义横切逻辑, 去增加新的功能.
+
+![](./image/26.jpg)
+
+即AOP在 不改变原有代码的情况下, 去增加新的功能.
+
+
+
+## 11.3 使用Spring实现AOP
+
+[重点]使用AOP织入, 需要导入一个依赖包!
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+<dependency>
+	<groupId>org.aspectj</groupId>
+	<artifactId>aspectjweaver</artifactId>
+	<version>1.9.8</version>
+</dependency>
+```
+
+方式一: 使用Spring的API接口
