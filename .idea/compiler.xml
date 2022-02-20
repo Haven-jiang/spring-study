@@ -20,6 +20,7 @@
     <bytecodeTargetLevel>
       <module name="spring-01-ioc1" target="17" />
       <module name="spring-01-ioc1 (1)" target="17" />
+      <module name="spring-07-appconfig" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="address" class="com.Haven.pojo.Address">
+        <property name="address" value="中国内蒙古自治区锡林郭勒盟"/>
+    </bean>
+
+    <bean id="studentinfo" class="com.Haven.pojo.Student">
+        <property name="name" value="姜涵文"/>
+        <constructor-arg ref="address"/>
+        <property name="books">
+            <array>
+                <value>红楼梦</value>
+                <value>三国演义</value>
+                <value>西游记</value>
+                <value>水浒传</value>
+                <value>Java进阶</value>
+                <value>JavaSpring</value>
+            </array>
+        </property>
+        <property name="hobbys">
+            <list>
+                <value>听音乐</value>
+                <value>打篮球</value>
+                <value>写代码</value>
+                <value>女</value>
+            </list>
+        </property>
+        <property name="card">
+            <map>
+                <entry key="peopleID" value="152325200909134014"/>
+                <entry key="cardID" value="6217370060200164010"/>
+            </map>
+        </property>
+        <property name="games">
+            <set>
+                <value>LOL</value>
+                <value>COC</value>
+                <value>BOB</value>
+                <value>GRUB</value>
+            </set>
+        </property>
+        <property name="wife" value="true"/>
+        <property name="info">
+            <props>
+                <prop key="id">1315672572</prop>
+                <prop key="key">aabbcccdddd123</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
