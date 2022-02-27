@@ -2,6 +2,8 @@
 
 ## 1.1  简介
 
+
+
 * Spring：春天———> 给软件行业带来了春天！
 * 2002，首次推出了Spring框架的雏形：interface21框架！
 * Spring框架即以interface21框架为基础，经过重新设计，并不断丰富其内涵，于2004年3月24日，发布了1.0正式版。
@@ -10,9 +12,15 @@
 * SSH： Struct2 + Spring + Hibernate
 * SSM： SpringMvc + Spring + Mybatis！
 
+
+
 官网：https://spring.io/projects/spring-framework#overview
-		官方下载地址： http://repo.spring.io/release/org/springframework/spring
-		GitHub： https://github.com/spring-projects/spring-framework
+
+官方下载地址： http://repo.spring.io/release/org/springframework/spring
+
+GitHub： https://github.com/spring-projects/spring-framework
+
+
 
 
 ```xml
@@ -22,7 +30,7 @@
     <artifactId>spring-webmvc</artifactId>
     <version>5.3.15</version>
 </dependency>
-
+<!-------------------------------------------------------------------------------->
 <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
 <dependency>
     <groupId>org.springframework</groupId>
@@ -31,7 +39,11 @@
 </dependency>
 ```
 
+
+
 ## 1.2 优点
+
+
 
 * Spring 是一个开源的免费框架
 * Spring是一个轻量级的、非入侵式的框架
@@ -40,50 +52,49 @@
 
 - 总结: Spring就是一个轻量级的控制反转和面向切片编程的框架!
 
+
+
 ## 1.3 组成
 
-```mermaid
-graph LR
-    id1[Spring AOP]
-    id2[Spring ORM]
-    id3[Spring Web]
-    id4[Spring DAO]
-    id5[Spring Context]
-    id6[Spring Web MVC]
-    id7[Spring Core]
-    id8[Source-level metadata AOP infrastructure]
-    id9[Hibernate support iBats support JDO support]
-    id10[WebApplicationContext Mutipart resolver Web utlities]
-    id11[Transaction infrastructure JOBC support DAO support]
-    id12[Application context UI support Validation JNDL EJB support and remodeling Mail]
-    id13[Web Mvc Framework Web Views JSP/Velocity PDF/Export]
-    id14[Supporting utlities Bean container]
-    id1 ---> id8
-    id2 ---> id9
-    id3 ---> id10
-    id4 ---> id11
-    id5 ---> id12
-    id6 ---> id13
-    id7 ---> id14
-```
+
+
+ <img src="https://have1.coding.net/p/image/d/image/git/raw/master/seven.png" alt="seven.png" style="zoom: 80%;" />
+
+
 
 ## 1.4 拓展
 
+
+
 在Spring官网有这些的介绍：现代化的java开发
-![](./image/Spring-3.png)
+
+
+
+<img src="https://have1.coding.net/p/image/d/image/git/raw/master/Spring-3.png?download=false" style="zoom: 80%;" />
+
+
 
 
 * Spring Boot
   * 一个快速的脚手架
   * 基于SpringBoot可以快速开发单个微服务
   * 约定大于配置
+  
+  
+  
 * Spring Cloud
   * SpringCloud是基于SpringBoot实现的
     因为现在大多数公司都在使用SpringBoot进行快速开发，学习SpringBoot的前提，需要完全掌握Spring及SpringMVC！承上启下的作用！
+  
+  
 
 弊端：发展了太久之后，违背了原来的理念！配置十分繁琐，人称：“配置地狱”
 
+
+
 # 2、IOC理论推导
+
+
 
 	1. UserDao接口
 	
@@ -95,7 +106,11 @@ graph LR
 
 > 在我们之前的业务中， 用户的需求可能会影响我们原来的源代码，我们需要根据用户的需求去修改源代码！如果程序代码量十分大修改一次的成本十分昂贵！
 
+
+
 我们使用一个Set接口实现，已经发生了革命性的变化！
+
+
 
 ```Java
 Private UserDao userDao;
@@ -104,6 +119,8 @@ Public void setUserDao(UserDao userDao) {
 	this.userDao = userDao;
 }
 ```
+
+
 
 * 之前程序是主动创建对象！控制权在程序员手上！
 * 使用了set注入后， 程序不再具有主动性，而是变成了被动的接受对象！
@@ -114,9 +131,15 @@ Public void setUserDao(UserDao userDao) {
 
 ## 2.1 IOC本质
 
+
+
 控制反转loC(Inversion of Control)，是一种设计思想，DI(依赖注入)是实现IoC的一种方法，也有人认为DI只是IoC的另一种说法。没有IoC的程序中，我们使用面向对象编程，对象的创建与对象间的依赖关系完全硬编码在程序中，对象的创建由程序自己控制，控制反转后将对象的创建转移给第三方，个人认为所谓控制反转就是：获得依赖对象的方式反转了。
 
+
+
 采用XML方式配置Bean的时候，Bean的定义信息是和实现分离的，而采用注解的方式可以把两者合为一体，Bean的定义信息直接以注解的形式定义在实现类中，从而达到了零配置的目的。
+
+
 
 控制反转是一种通过描述(XML或注解）并通过第三方去生产或获取特定对象的方式。在Spring中实现控制反转的是loC容器，其实现方法是依赖注入 (Dependency Injertion,DI)
 
@@ -128,21 +151,30 @@ Public void setUserDao(UserDao userDao) {
 
 ## 3.1.Set注入方式
 
+
+
 原生java：
-		类型 变量名 = new 类型();
-	ex:Hello hello = new Hello();
+
+​	类型 变量名 = new 类型();
+
+​	ex:Hello hello = new Hello();
+
 Spring:
-		id = 变量名
-		class = new 的对象
-		property 相当于给对象中的属性设置值
 
-**Code:[[spring-02-hellospring]]**
-<https://github.com/Haven-jiang/spring-study/tree/master/spring-02-hellospring>
+​	id = 变量名
 
-![](image/02-hello.jpg)
+​	class = new 的对象
+
+​	property 相当于给对象中的属性设置值
+
+**Code:[[spring-02-hellospring]]**<https://github.com/Haven-jiang/spring-study/tree/master/spring-02-hellospring>
+
+------
+
+- **`spring-study/spring-02-hellospring/src/main/java/com/com.haven/pojo/Hello.java`**
 
 ```Java
-package com.haven.pojo;
+package com.com.haven.pojo;
 
 public class Hello {
 
@@ -165,7 +197,9 @@ public class Hello {
 }
 ```
 
-![](image/02-beans.jpg)
+
+
+- **`spring-study/spring-02-hellospring/src/main/resources/beans.xml`**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -187,20 +221,22 @@ public class Hello {
 
         -->
 
-    <bean id="hello" class="com.haven.pojo.Hello">
+    <bean id="hello" class="com.com.haven.pojo.Hello">
         <property name="teststr" value="hello"/>
     </bean>
 
-    <bean id="aloha" class="com.haven.pojo.Hello">
+    <bean id="aloha" class="com.com.haven.pojo.Hello">
         <property name="teststr" value="aloha"/>
     </bean>
 </beans>
 ```
 
-![](image/02-MyText.jpg)
+ 
+
+- **`spring-study/spring-02-hellospring/src/test/java/MyTest.java`**
 
 ```Java
-import com.haven.pojo.Hello;
+import com.com.haven.pojo.Hello;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -217,18 +253,27 @@ public class MyTest {
 
 
 
-## **3.2.About ApplicationContext:**
+## **3.2 About ApplicationContext:**
 
-![](./image/ApplicationContext.jpg)
 
-## 3.3.ref 和 value 的使用与区别
+
+ `<img src="https://have1.coding.net/p/image/d/image/git/raw/master/ApplicationContext.jpg" style="zoom: 80%;" />`
+
+
+
+## 3.3 ref 和 value 的使用与区别
+
+
 
 ref: 引用Spring容器中创建好的对象
+
 value: 具体的值， 基本数据类型
 
 [spring-01-ioc1]: https://github.com/Haven-jiang/spring-study/tree/master/spring-01-ioc1	"code"
 
-![](./image/01-beans.jpg)
+ 
+
+- **`spring-study/spring-02-hellospring/src/main/resource/Beans.xml`**
 
 ```Xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -237,20 +282,22 @@ value: 具体的值， 基本数据类型
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="mysql" class="com.haven.dao.UserDaoMysqlImpl"></bean>
-    <bean id="oracle" class="com.haven.dao.UserDaoOracleImpl"></bean>
-    <bean id="default" class="com.haven.dao.UserDaoImpl"></bean>
+    <bean id="mysql" class="com.com.haven.dao.UserDaoMysqlImpl"></bean>
+    <bean id="oracle" class="com.com.haven.dao.UserDaoOracleImpl"></bean>
+    <bean id="default" class="com.com.haven.dao.UserDaoImpl"></bean>
 
     <!--
     ref: 引用Spring容器中创建好的对象
     value: 具体的值,基本数据类型
     -->
-    <bean id="service" class="com.haven.service.UserServiceImpl">
+    <bean id="service" class="com.com.haven.service.UserServiceImpl">
         <property name="userdao" ref="oracle"></property>
     </bean>
 
 </beans>
 ```
+
+
 
 控制：谁来控制对象的创建，传统应用程序的对象是由程序本身控制创建的，使用Spring后，对象是由Spring来创建的。
 
@@ -267,9 +314,15 @@ IoC是一种编程思想，由主动的编程变成被动的接收．
 
 # 4、Spring配置
 
+
+
 ## 4.1. Import
 
+
+
 For example:
+
+
 
 ```xml
     <import resource="beans.xml"/>
@@ -278,21 +331,29 @@ For example:
     <import resource="beans3.xml"/>
 ```
 
+
+
 in ApplicationContext.xml
+
+
 
 ## 4.2. Alias
 
-```xml
-    <alias name="user1" alias="user10086"/>
-```
+
+
+​    `<alias name="user1" alias="user10086"/>`
+
+
 
 ## 4.3. Bean
 
+
+
 * name:
 
-```xml
-    <bean id="user1" class="com.haven.pojo.User" name="u1,s1 u2;s2">
-```
+  
+
+​    `<bean id="user1" class="com.com.haven.pojo.User" name="u1,s1 u2;s2">`
 
 
 
@@ -319,63 +380,72 @@ class Address {
 
     public String address;
 }
+
 ```
 
 ```xml
-    <bean id="address" class="com.Haven.pojo.Address">
-        <property name="address" value="中国内蒙古自治区锡林郭勒盟"/>
-    </bean>
+<bean id="address" class="com.Haven.pojo.Address">
+    <property name="address" value="中国内蒙古自治区锡林郭勒盟"/>
+</bean>
 
-    <bean id="studentinfo" class="com.Haven.pojo.Student">
-        <property name="name" value="姜涵文"/>
-        <constructor-arg ref="address"/>
-        <property name="books">
-            <array>
-                <value>红楼梦</value>
-                <value>三国演义</value>
-                <value>西游记</value>
-                <value>水浒传</value>
-                <value>Java进阶</value>
-                <value>JavaSpring</value>
-            </array>
-        </property>
-        <property name="hobbys">
-            <list>
-                <value>听音乐</value>
-                <value>打篮球</value>
-                <value>写代码</value>
-                <value>女</value>
-            </list>
-        </property>
-        <property name="card">
-            <map>
-                <entry key="peopleID" value="152325200909134014"/>
-                <entry key="cardID" value="6217370060200164010"/>
-            </map>
-        </property>
-        <property name="games">
-            <set>
-                <value>LOL</value>
-                <value>COC</value>
-                <value>BOB</value>
-                <value>GRUB</value>
-            </set>
-        </property>
-        <property name="wife" value="true"/>
-        <property name="info">
-            <props>
-                <prop key="id">1315672572</prop>
-                <prop key="key">aabbcccdddd123</prop>
-            </props>
-        </property>
-    </bean>
+<bean id="studentinfo" class="com.Haven.pojo.Student">
+    <property name="name" value="姜涵文"/>
+    <constructor-arg ref="address"/>
+    <property name="books">
+        <array>
+            <value>红楼梦</value>
+            <value>三国演义</value>
+            <value>西游记</value>
+            <value>水浒传</value>
+            <value>Java进阶</value>
+            <value>JavaSpring</value>
+        </array>
+    </property>
+    <property name="hobbys">
+        <list>
+            <value>听音乐</value>
+            <value>打篮球</value>
+            <value>写代码</value>
+            <value>女</value>
+        </list>
+    </property>
+    <property name="card">
+        <map>
+            <entry key="peopleID" value="152325200909134014"/>
+            <entry key="cardID" value="6217370060200164010"/>
+        </map>
+    </property>
+    <property name="games">
+        <set>
+            <value>LOL</value>
+            <value>COC</value>
+            <value>BOB</value>
+            <value>GRUB</value>
+        </set>
+    </property>
+    <property name="wife" value="true"/>
+    <property name="info">
+        <props>
+            <prop key="id">1315672572</prop>
+            <prop key="key">aabbcccdddd123</prop>
+        </props>
+    </property>
+</bean>
 ```
+
+
 
 [beans.xml](https://gitee.com/just-holdway/spring-study/raw/master/spring-04-di/src/main/resources/beans.xml)
 
+
+
 **Collections**
 
+
+
 The `<list/>`, `<set/>`, `<map/>`, and `<props/>` elements set the properties and arguments of the Java `Collection` types `List`, `Set`, `Map`, and `Properties`, respectively. The following example shows how to use them:
+
+
 
 ```xml
 <bean id="moreComplexObject" class="example.ComplexObject">
@@ -411,19 +481,29 @@ The `<list/>`, `<set/>`, `<map/>`, and `<props/>` elements set the properties an
 </bean>
 ```
 
+
+
 The value of a map key or value, or a set value, can also be any of the following elements:
 
-```xml
-bean | ref | idref | list | set | map | props | value | null
-```
+- `bean | ref | idref | list | set | map | props | value | null`
+
+
 
 **Collection Merging**
 
+
+
 The Spring container also supports merging collections. An application developer can define a parent `<list/>`,`<map/>`,`<set/>` or `<props/>` element and have child `<list/>`,`<map/>`,`<set/>` or `<props/>` elements inherit and override values from the parent collection. That is, the child collection's values are the result of merging the elements of the parent and child collections, with the child's collection elements overriding values specified in the parent collection.
+
+
 
 This section on merging discusses the parent-child bean mechanism. Readers unfamiliar with parent and child bean definitions may wish to read the relevant section before continuing.
 
+
+
 The following example demonstrates collection merging:
+
+
 
 ```xml
 <beans>
@@ -447,7 +527,11 @@ The following example demonstrates collection merging:
 <beans>
 ```
 
+
+
 Notice the use of the `merge=true` attribute on the element of the `<props/> adminEmails` property of the bean definition. When the bean is `child child` resolved and instantiated by the container, the resulting instance has an collection that contains the result of merging the child's collection. The following listing shows the result: `adminEmails Properties adminEmails adminEmails`
+
+
 
 ```
 administrator=administrator@example.com
@@ -473,6 +557,8 @@ support=support@example.co.uk
 
 Constructor-based DI is accomplished by the container invoking a constructor with a number of arguments, each representing a dependency. Calling a static factory method with specific arguments to construct the bean is nearly equivalent, and this discussion treats arguments to a constructor and to a static factory method similarly. The following example shows a class that can only be dependency-injected with constructor injection:
 
+
+
 ```Java
 public class SimpleMovieLister {
 
@@ -488,19 +574,25 @@ public class SimpleMovieLister {
 }
 ```
 
+
+
 Notice that there is nothing special about this class. It is a POJO that has no dependencies on container specific interfaces, base classes, or annotations.
 
 ```xml
     <!--第一种方式 类中类赋值-->
-    <bean id="user4" class="com.haven.pojo.User">
-        <constructor-arg ref="op1"/>
-    </bean>
-    <bean id="op1" class="com.haven.pojo.User">
-        <property name="ptr" value="none"/>
-    </bean>
+<bean id="user4" class="com.com.haven.pojo.User">
+    <constructor-arg ref="op1"/>
+</bean>
+<bean id="op1" class="com.com.haven.pojo.User">
+<property name="ptr" value="none"/>
+</bean>
 ```
 
+
+
 Constructor argument resolution matching occurs by using the argument’s type. If no potential ambiguity exists in the constructor arguments of a bean definition, the order in which the constructor arguments are defined in a bean definition is the order in which those arguments are supplied to the appropriate constructor when the bean is being instantiated. Consider the following class:
+
+
 
 ```Java
 package x.y;
@@ -513,7 +605,11 @@ public class ThingOne {
 }
 ```
 
-Assuming that the ThingTwo and ThingThree classes are not related by inheritance, no potential ambiguity exists. Thus, the following configuration works fine, and you do not need to specify the constructor argument indexes or types explicitly in the <constructor-arg/> element.
+
+
+Assuming that the ThingTwo and ThingThree classes are not related by inheritance, no potential ambiguity exists. Thus, the following configuration works fine, and you do not need to specify the constructor argument indexes or types explicitly in the `<constructor-arg/> `element.
+
+
 
 ```xml
 <beans>
@@ -532,16 +628,18 @@ Assuming that the ThingTwo and ThingThree classes are not related by inheritance
 
 ### 5.2.2 第二种赋值方式(Constructor argument type matching)
 
-
-
 ```xml
     <!--第二种 参数类型赋值  不建议使用-->
-    <bean id="user2" class="com.haven.pojo.User">
-        <constructor-arg type="java.lang.String" value="王刚"/>
-    </bean>
+<bean id="user2" class="com.com.haven.pojo.User">
+    <constructor-arg type="java.lang.String" value="王刚"/>
+</bean>
 ```
 
-When another bean is referenced, the type is known, and matching can occur (as was the case with the preceding example). When a simple type is used, such as <value>true</value>, Spring cannot determine the type of the value, and so cannot match by type without help. Consider the following class:
+
+
+When another bean is referenced, the type is known, and matching can occur (as was the case with the preceding example). When a simple type is used, such as `<value>`true`</value>`, Spring cannot determine the type of the value, and so cannot match by type without help. Consider the following class:
+
+
 
 ```Java
 package examples;
@@ -565,7 +663,11 @@ public class ExampleBean {
 <constructor-arg type="int" value="7500000"/>
 ```
 
+
+
 In the preceding scenario, the container can use type matching with simple types if you explicitly specify the type of the constructor argument by using the type attribute, as the following example shows:
+
+
 
 ```xml
 <bean id="exampleBean" class="examples.ExampleBean">
@@ -578,16 +680,18 @@ In the preceding scenario, the container can use type matching with simple types
 
 ### 5.2.3.第三种注入方式(Constructor argument index)
 
-
-
 ```xml
     <!--第三种 下标赋值-->
-    <bean id="user1" class="com.haven.pojo.User" name="u1,s1 u2;s2">
-        <constructor-arg index="0" value="王刚10086"/>
-    </bean>
+<bean id="user1" class="com.com.haven.pojo.User" name="u1,s1 u2;s2">
+    <constructor-arg index="0" value="王刚10086"/>
+</bean>
 ```
 
+
+
 You can use the index attribute to specify explicitly the index of constructor arguments, as the following example shows:
+
+
 
 ```xml
 <bean id="exampleBean" class="examples.ExampleBean">
@@ -597,22 +701,26 @@ You can use the index attribute to specify explicitly the index of constructor a
 In addition to resolving the ambiguity of multiple simple values, specifying an index resolves ambiguity where a constructor has two arguments of the same type.
 ```
 
+
+
 The index is 0-based.
 
 
 
 ### 5.2.4.第四种注入方式(Constructor argument name)
 
-
-
 ```xml
     <!--第四种方式 直接通过参数名赋值-->
-    <bean id="user3" class="com.haven.pojo.User">
-        <constructor-arg name="name" value="王刚"/>
-    </bean>
+<bean id="user3" class="com.com.haven.pojo.User">
+    <constructor-arg name="name" value="王刚"/>
+</bean>
 ```
 
+
+
 You can also use the constructor parameter name for value disambiguation, as the following example shows:
+
+
 
 ```xml
 <bean id="exampleBean" class="examples.ExampleBean">
@@ -620,8 +728,6 @@ You can also use the constructor parameter name for value disambiguation, as the
     <constructor-arg name="ultimateAnswer" value="42"/>
 </bean>
 ```
-
-# 
 
 
 
@@ -746,8 +852,6 @@ For the rare cases where the constructor argument names are not available (usual
     c:_2="something@somewhere.com"/>
 ```
 
-> 
->
 > Due to the XML grammar, the index notation requires the presence of the leading , as XML attribute names cannot start with a number (even though some IDEs allow it). A corresponding index notation is also available for elements but not commonly used since the plain order of declaration is usually sufficient there. `_<constructor-arg>`
 
 
@@ -776,7 +880,9 @@ In practice, the constructor resolution mechanism is quite efficient in matching
 
 ### 5.4.1. The Singleton Scope(单例模式 默认)
 
-<img src="https://docs.spring.io/spring-framework/docs/current/reference/html/images/singleton.png" alt="singleton"  />
+ <img src="https://docs.spring.io/spring-framework/docs/current/reference/html/images/singleton.png" alt="singleton"  />
+
+
 
 ```xml
 <bean id="accountService" class="com.something.DefaultAccountService"/>
@@ -791,17 +897,21 @@ In practice, the constructor resolution mechanism is quite efficient in matching
 
 
 
-<img src="https://docs.spring.io/spring-framework/docs/current/reference/html/images/prototype.png" alt="prototype"  />
+ <img src="https://docs.spring.io/spring-framework/docs/current/reference/html/images/prototype.png" alt="prototype"  />
 
 ```xml
 <bean id="accountService" class="com.something.DefaultAccountService" scope="prototype"/>
 ```
+
+
 
 **每次从容其中get的时候, 都会产生一个新对象!**
 
 
 
 ### 5.4.3. 其余的request,session,application
+
+
 
 **只能在Web开发中使用到!**
 
@@ -818,19 +928,27 @@ In practice, the constructor resolution mechanism is quite efficient in matching
 
 在Spring中有三种装配的方式
 
-	1. 在xml中显示的配置
-	1. 在java 中显示配置
-	1. 隐式的自动装配bean[重要]
+
+
+```txt
+在xml中显示的配置
+在java 中显示配置
+隐式的自动装配bean[重要]
+```
 
 
 
 ## 6.1 测试
+
+
 
 环境搭建:一个人有两个宠物
 
 
 
 ## 6.2 ByName自动装配
+
+
 
 ```xml
 	<bean id="cat" class="com.Haven.pojo.Cat"/>
@@ -841,7 +959,11 @@ In practice, the constructor resolution mechanism is quite efficient in matching
 	<bean id="people" class="com.Haven.pojo.People" autowire="byType" p:name="Haven"/>
 ```
 
+
+
 ## 6.3 ByType自动装配
+
+
 
 ```xml
     <bean class="com.Haven.pojo.Cat"/>
@@ -852,19 +974,26 @@ In practice, the constructor resolution mechanism is quite efficient in matching
     <bean id="people" class="com.Haven.pojo.People" autowire="byType" p:name="Haven"/>
 ```
 
+
+
 小结:
 
 * byname的时候, 需要保证所有的bean的id唯一, 并且这个bean需要和自动注入的属性的set方法值一致!
 * bytype的时候, 需要保证所有的bean的class唯一, 并且这个bean需要和自动注入的属性的set的类型与数量一致!
 
+
+
 ## 6.4 使用注解自动装配
+
+
 
 jdk1.5支持的注解, Spring2.5就支持注解了!
 
 The introduction of annotation-based configuration raised the question of whether this approach is “better” than XML. 
 
 1. 导入约束 [xmlns:context="http://www.springframework.org/schema/context"](xml)
-2. 配置注解的支持 [<context:annotation-config/>](xml)
+2. 配置注解的支持 [<context:annotation-config/>
+2. [](xml)
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -900,6 +1029,8 @@ public @interface Autowired {
     boolean required() default true;
 }
 ```
+
+
 
 测试代码
 
@@ -938,6 +1069,8 @@ public class People {
 
 ```
 
+
+
 **@Resource注解** //已弃用
 
 ```java
@@ -966,7 +1099,9 @@ public class People {
 
 在Spring4之后, 要使用注解开发, 必须要保证aop的包导入了
 
-![](./image/7.0.png)
+ <img src="https://have1.coding.net/p/image/d/image/git/raw/master/7.0.png" style="zoom:150%;" />
+
+
 
 使用注解需要导入context约束, 增加注解的支持!
 
@@ -994,6 +1129,8 @@ public class People {
 
 2. 属性如何注入
 
+   
+
    ```xml
    @Component //等价于 <bean id="user" class="com.Haven.pojo.User"/>
    public class User {
@@ -1009,7 +1146,7 @@ public class People {
 
    
 
-3. 衍生的注解
+4. 衍生的注解
 
    @Component 有几个衍生注解, 我们在web开发中, 会按照mvc三层架构分层!
 
@@ -1020,6 +1157,8 @@ public class People {
    - controller [@Controller]
 
      这四个注解功能都是一样的, 都是代表将某个类注册到Spring中, 装配bean
+     
+     
 
 4. 自动装配置
 
@@ -1030,7 +1169,9 @@ public class People {
    - @Resource : 自动装配通过 name->type
    ```
 
-5. 作用域
+   
+
+6. 作用域
 
    ```java
    @Component //等价于 <bean id="user" class="com.Haven.pojo.User"/>
@@ -1046,6 +1187,8 @@ public class People {
    }
    ```
 
+   
+
 6. 小结
 
    xml 与 注解:
@@ -1059,6 +1202,8 @@ public class People {
    - 注解只负责完成属性注入;
    - 我们在使用的过程中, 只需要注意一个问题: 必须让注解生效, 就需要开启注解的支持;
    
+   
+   
    ```xml
        <!--指定要扫描的包, 这个包下的注解就会生效-->
        <context:component-scan base-package="com.Haven"/>
@@ -1068,6 +1213,8 @@ public class People {
 
 
 # 8、使用Java的方式配置Spring
+
+
 
 我们现在要完全不适用Spring的xml配置了, 全权交给java来做!
 
@@ -1100,6 +1247,8 @@ public class User {
 }
 ```
 
+
+
 配置文件:
 
 ```java
@@ -1118,6 +1267,8 @@ public class AppConfig {
 }
 ```
 
+
+
 测试类:
 
 ```java
@@ -1133,14 +1284,23 @@ public class MyTest {
 
 这种纯Java的配置方式, 在 Spring Boot 中随处可见!
 
+
+
 # 9、代理模式
+
+
 
 为什么要学习代理模式?因为这就是SpringAOP的底层![SpringAOP 和 SpringMVC]
 代理模式的分类:
 - 静态代理
 - 动态代理
 
+
+
 ## 9.1 静态代理
+
+
+
 角色分析:
 - 抽象角色:一般会使用接口或者抽象类来解决
 - 真实角色:被代理的角色
@@ -1148,6 +1308,9 @@ public class MyTest {
 - 客户:访问对象的人!
 
 代码步骤:
+
+
+
 1. 接口
 ```java
 //租房
@@ -1155,7 +1318,10 @@ public interface Rent {
     public void rent();
 }
 ```
+
+
 2. 真实角色
+
 ```java
 //房东
 public class Host implements Rent {
@@ -1165,7 +1331,10 @@ public class Host implements Rent {
     }
 }
 ```
+
+
 3. 代理角色
+
 ```java
 public class Proxy implements Rent {
     private Host host;
@@ -1201,7 +1370,10 @@ public class Proxy implements Rent {
     }
 }
 ```
+
+
 4. 客户端访问代理角色
+
 ```java
 public class Client {
     public static void main(String[] args) {
@@ -1217,19 +1389,31 @@ public class Client {
 }
 ```
 
+
+
 代理模式的好处:
+
 - 可以使真实角色的操作更加纯粹!不用去关注一些公共的业务
 - 公共也就交给代理角色!实现了业务的分工!
 - 公共业务发生扩展的时候, 方便集中管理!
 缺点:
 - 一个真实角色就会产生一个代理角色;代码量会翻倍 开发效率会变低
 
+
+
 ## 10.2 加深理解
 
+
+
 代码: file:spring-08-proxy
-![](./image/AOP.png)
+ <img src="https://have1.coding.net/p/image/d/image/git/raw/master/IMG-0142.jpg?download=false" alt="AOP.png" style="zoom:80%;" />
+
+
 
 ## 10.3 动态代理
+
+
+
 - 动态代理和静态代理角色一样
 - 动态代理的代理类是动态生成的, 不是我们直接写好的!
 - 动态代理分为两大类: 基于接口的动态代理, 基于类的动态代理
@@ -1253,13 +1437,21 @@ public class Client {
 
 # 10、AOP
 
+
+
 ## 10.1 什么是AOP
+
+
 
 AOP(Aspect Oriented Programming) 意为: 面向切片编程, 通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术. AOP是OOP的延续, 是软件开发中的一个热点, 也是Spring框架中的一个重要内容, 是函数式编程的一种衍生泛型. 利用AOP可以对业务逻辑的各个部分进行隔离,从而使得业务逻辑各部分之间的耦合度降低, 提高程序的可重用性, 同时提高了开发效率.
 
-<img src="./image/AOP.jpg" alt="AOP"  />
+ <img src="https://have1.coding.net/p/image/d/image/git/raw/master/AOP.jpg" alt="AOP" style="zoom: 33%;" />
+
+
 
 ## 10.2 AOP在Spring中的作用
+
+
 
 ==提供声明式服务; 允许用户自定义切面==
 
@@ -1271,17 +1463,21 @@ AOP(Aspect Oriented Programming) 意为: 面向切片编程, 通过预编译方�
 - 切入点(PointCut): 切面通知 执行的“地点”的定义.
 - 连接点(JionPoint): 与切入点匹配的支持点.
 
-![](./image/10.jpg)
+ <img src="https://have1.coding.net/p/image/d/image/git/raw/master/10.jpg" style="zoom:33%;" />
+
+
 
 SpringAOP中, 通过Advice定义横切逻辑, 去增加新的功能.
 
-![](./image/26.jpg)
+ <img src="https://have1.coding.net/p/image/d/image/git/raw/master/26.jpg" style="zoom:33%;" />
 
 即AOP在 不改变原有代码的情况下, 去增加新的功能.
 
 
 
 ## 11.3 使用Spring实现AOP
+
+
 
 [重点]使用AOP织入, 需要导入一个依赖包!
 
@@ -1294,4 +1490,6 @@ SpringAOP中, 通过Advice定义横切逻辑, 去增加新的功能.
 </dependency>
 ```
 
-方式一: 使用Spring的API接口
+
+
+方式一: 使用Spring的API接口[[]]
